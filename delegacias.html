@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delegacias Especializadas</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+
+<body>
+
+     
+    <header class="flex justify-between items-center px-6 py-4 bg-white shadow-md">
+        <nav class="flex space-x-6 text-sm">
+            <a href="#" class="hover:underline">Artigos</a>
+            <a href="#" class="hover:underline">Delegacias especializadas</a>
+            <a href="#" class="hover:underline">Contate-nos</a>
+        </nav>
+        <div class="space-x-3">
+            <button class="px-4 py-1 border border-gray-400 rounded hover:bg-gray-200">Login</button>
+            <button class="px-4 py-1 border border-red-400 text-red-500 rounded hover:bg-red-100">Register</button>
+        </div>
+    </header>
+
+
+
+  <div class="w-full bg-white-200 py-10 text-center">
+    <h1 class="text-4xl font-bold">Delegacias especializadas</h1>
+  </div>
+
+  
+
+  <main class="flex flex-wrap justify-center gap-6 my-12 px-4">
+    <div class="bg-white p-6 rounded-lg shadow-md w-64 text-center hover:shadow-xl transition">
+      <h2 class="font-semibold text-sm mb-2">Delegacia 01</h2>
+      <h3 class="text-xl font-bold mb-4">Cidade / Estado</h3>
+      <ul class="text-left list-disc list-inside space-y-1">
+        <li>Telefone</li>
+        <li>Email</li>
+        <li>Whatsapp</li>
+        <li>Instagram</li>
+      </ul>
+    </div>
+
+    <div class="bg-gray-800 text-white p-6 rounded-lg shadow-md w-64 text-center hover:shadow-xl transition">
+      <h2 class="font-semibold text-sm mb-2">Delegacia 02</h2>
+      <h3 class="text-xl font-bold mb-4">Cidade / Estado</h3>
+      <ul class="text-left list-disc list-inside space-y-1">
+        <li>Telefone</li>
+        <li>Email</li>
+        <li>Whatsapp</li>
+        <li>Instagram</li>
+      </ul>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow-md w-64 text-center hover:shadow-xl transition">
+      <h2 class="font-semibold text-sm mb-2">Delegacia 03</h2>
+      <h3 class="text-xl font-bold mb-4">Cidade / Estado</h3>
+      <ul class="text-left list-disc list-inside space-y-1">
+        <li>Telefone</li>
+        <li>Email</li>
+        <li>Whatsapp</li>
+        <li>Instagram</li>
+      </ul>
+    </div>
+  </main>
+
+ 
+  <footer class="text-center py-10">
+    <p class="text-lg font-bold">Quebre o silêncio</p>
+    <p class="text-gray-600">Denuncie</p>
+  </footer>
+
+  <!-- p/ destacar o card -->
+  <script>
+    const cards = document.querySelectorAll('main > div');
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        cards.forEach(c => c.classList.remove('bg-gray-800', 'text-white'));
+        card.classList.add('bg-gray-800', 'text-white');
+      });
+    });
+  </script>
+
+</body>
+</html>
