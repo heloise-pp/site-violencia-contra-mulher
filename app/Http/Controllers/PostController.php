@@ -2,110 +2,107 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-class PostController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
-}
-
-<?php
-
-namespace App\Http\Controllers;
-
+use App\Http\Requests\PostStoreRequest;
+use App\Http\Requests\PostUpdateRequest;
+use App\Http\Resources\PostResource;
 use App\Models\Post;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
+    /**
+     * GET /api/posts
+     * Exibe uma listagem de posts.
+     */
+    public function index(): AnonymousResourceCollection
+    {
+        // Paginando 15 posts por página.
+        $posts = Post::latest()->paginate(15);
 
+        // Usa PostResource::collection para transformar a coleção/paginador.
+        return PostResource::collection($posts);
+    }
+
+    /**
+     * POST /api/posts
+     * Cria e armazena um novo post.
+     */
+    public function store(PostStoreRequest $request): JsonResponse
+    {
+        $validated = $request->validated();
+
+        // Gera o slug antes de criar o post
+        $validated['slug'] = Str::slug($validated['title']);
+
+        $post = auth()->user()->posts()->create($validated);
+
+        // Retorna a resposta formatada usando o Resource (HTTP 201 Created)
+        return response()->json([
+            'message' => 'Post criado com sucesso!',
+            'post' => new PostResource($post)
+        ], 201);
+    }
 
     /**
      * GET /api/posts/{post}
-     * exibe um post específico
+     * Exibe um post específico (usando Route Model Binding).
      */
-    public function show(Post $post)
+    public function show(Post $post): PostResource
     {
-        // O $post já contém o modelo carregado do banco de dados
-
-        return response()->json($post);
+        return new PostResource($post);
     }
 
     /**
      * PUT/PATCH /api/posts/{post}
-     * atualiza um post existent
+     * Atualiza um post existente.
      */
-    public function update(Request $request, Post $post)
+    public function update(PostUpdateRequest $request, Post $post): JsonResponse
     {
-        // validação dos dados
-        $validated = $request->validate([
-            'title'   => 'required|string|max:255',
-            'content' => 'required',
-            'is_published' => 'boolean',
-            'slug'    => 'unique:posts,slug,' . $post->id,
-        ]);
+        // 1. Autorização: Verifica se o usuário logado é o dono do post
+        if ($request->user()->id !== $post->user_id) {
+            return response()->json([
+                'message' => 'Acesso negado. Você não pode atualizar posts de outros usuários.'
+            ], 403); // HTTP 403 Forbidden
+        }
 
-        // preparação dos dados
+        // 2. Validação: Obtém apenas os dados validados (mais seguro)
+        $validated = $request->validated();
+
+        // Lógica do Slug
         if ($request->has('title')) {
             $validated['slug'] = Str::slug($validated['title']);
         }
 
-        // atualiza o post no banco de dados
+        // 3. Atualiza o Post (Usando apenas dados validados)
         $post->update($validated);
 
-        // retorna o post atualizado
-        return response()->json($post);
+        // 4. Retorna o Post Resource
+        return response()->json([
+            'message' => 'Post atualizado com sucesso!',
+            'post' => new PostResource($post)
+        ], 200);
     }
 
     /**
      * DELETE /api/posts/{post}
-     * remove um post do banco de dados
+     * Remove um post do banco de dados.
      */
-    public function destroy(Post $post)
+    public function destroy(Request $request, Post $post): JsonResponse
     {
-        // apaga o registro do banco de dados
+        // 1. Autorização: Verifica se o usuário logado é o dono do post
+        if ($request->user()->id !== $post->user_id) {
+            return response()->json([
+                'message' => 'Acesso negado. Você não pode deletar posts de outros usuários.'
+            ], 403); // HTTP 403 Forbidden
+        }
+
+        // 2. Deleta o Post
         $post->delete();
 
-        // retorna uma resposta de sucesso sem conteúdo (No Content)
+        // 3. Retorna a resposta (HTTP 204 No Content)
         return response()->json(null, 204);
     }
 }

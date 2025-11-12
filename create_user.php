@@ -10,7 +10,7 @@ $kernel->bootstrap();
 
 User::create([
     'name' => 'Admin Teste',
-    'email' => 'projetoextensaouniaselvi@gmail.com',
+    'email' => 'projetoextensaouniasselvi@gmail.com',
     'password' => bcrypt('ProjetoExtensao123'),
 ]);
 
