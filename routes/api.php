@@ -5,18 +5,24 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostController;
 
-
 // Rotas públicas
+Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
-Route::get('/posts', [PostController::class, 'index']);
-Route::get('/posts/{post}', [PostController::class, 'show']);
 
-// Rotas protegidas
 Route::middleware('auth:sanctum')->group(function () {
-    // ... rotas user e logout
 
+    // Logout
+    Route::post('/logout', [AuthController::class, 'logout']);
 
-    Route::post('posts', [PostController::class, 'store']); // Create
-    Route::patch('posts/{post}', [PostController::class, 'update']); // Update
-    Route::delete('posts/{post}', [PostController::class, 'destroy']); // Delete
+    // Usuário autenticado
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+
+    // CRUD de posts
+    Route::post('/posts', [PostController::class, 'store']);
+    Route::get('/posts', [PostController::class, 'index']);
+    Route::get('/posts/{id}', [PostController::class, 'show']);
+    Route::put('/posts/{id}', [PostController::class, 'update']);
+    Route::delete('/posts/{id}', [PostController::class, 'destroy']);
 });
