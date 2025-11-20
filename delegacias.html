@@ -1,87 +1,107 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Delegacias Especializadas</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delegacias Especializadas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+
+        .slider-wrapper {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .slider-wrapper::-webkit-scrollbar {
+            display: none;
+        }
+        .slider-item {
+            flex: 0 0 auto;
+            width: 100%;
+            padding: 1rem;
+            box-sizing: border-box;
+        }
+        @media (min-width: 768px) {
+            .slider-item {
+                width: 33.3333%;
+            }
+        }
+        .card-dark {
+            background-color: #333;
+            color: #fff;
+        }
+        .card-light {
+            background-color: #fff;
+            color: #1f2937;
+        }
+        .loading-animation {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid #10b981;
+            width: 1.5rem;
+            height: 1.5rem;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 
+<body class="bg-gray-50 min-h-screen">
 
-<body>
-
-     
-    <header class="flex justify-between items-center px-6 py-4 bg-white shadow-md">
-        <nav class="flex space-x-6 text-sm">
-            <a href="#" class="hover:underline">Artigos</a>
-            <a href="#" class="hover:underline">Delegacias especializadas</a>
-            <a href="#" class="hover:underline">Contate-nos</a>
+<header class="bg-white shadow-md">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+        <nav class="space-x-6 text-gray-700 font-medium">
+            <a href="#" class="hover:text-pink-600">Artigos</a>
+            <a href="#" class="text-pink-600 border-b-2 border-pink-600 pb-1">Delegacias especializadas</a>
+            <a href="#" class="hover:text-pink-600">Contate-nos</a>
         </nav>
         <div class="space-x-3">
-            <button class="px-4 py-1 border border-gray-400 rounded hover:bg-gray-200">Login</button>
-            <button class="px-4 py-1 border border-red-400 text-red-500 rounded hover:bg-red-100">Register</button>
+            <button class="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-100 transition">Login</button>
+            <button class="px-4 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition">Register</button>
         </div>
-    </header>
+    </div>
+</header>
 
+<main class="container mx-auto px-4 py-12 text-center">
 
+    <h1 class="text-3xl md:text-4xl font-extrabold text-gray-800 mb-12">Delegacias especializadas</h1>
 
-  <div class="w-full bg-white-200 py-10 text-center">
-    <h1 class="text-4xl font-bold">Delegacias especializadas</h1>
-  </div>
+    <div id="delegacias-section" class="relative max-w-5xl mx-auto">
 
-  
+        <div class="flex items-center justify-center h-20" id="loading-indicator">
+            <div class="loading-animation"></div>
+            <p class="ml-3 text-gray-600">Carregando contatos das Capitais...</p>
+        </div>
 
-  <main class="flex flex-wrap justify-center gap-6 my-12 px-4">
-    <div class="bg-white p-6 rounded-lg shadow-md w-64 text-center hover:shadow-xl transition">
-      <h2 class="font-semibold text-sm mb-2">Delegacia 01</h2>
-      <h3 class="text-xl font-bold mb-4">Cidade / Estado</h3>
-      <ul class="text-left list-disc list-inside space-y-1">
-        <li>Telefone</li>
-        <li>Email</li>
-        <li>Whatsapp</li>
-        <li>Instagram</li>
-      </ul>
+        <div class="slider-wrapper hidden" id="slider-wrapper"></div>
+
+        <button id="prev-btn" class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-white text-gray-700 p-3 rounded-full shadow-lg hover:bg-gray-200 transition z-10 hidden md:block" style="left: -3rem;">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+
+        <button id="next-btn" class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-white text-gray-700 p-3 rounded-full shadow-lg hover:bg-gray-200 transition z-10 hidden md:block" style="right: -3rem;">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+
+        <p id="error-message" class="text-red-500 mt-4 hidden">Não foi possível carregar os dados.</p>
+
     </div>
 
-    <div class="bg-gray-800 text-white p-6 rounded-lg shadow-md w-64 text-center hover:shadow-xl transition">
-      <h2 class="font-semibold text-sm mb-2">Delegacia 02</h2>
-      <h3 class="text-xl font-bold mb-4">Cidade / Estado</h3>
-      <ul class="text-left list-disc list-inside space-y-1">
-        <li>Telefone</li>
-        <li>Email</li>
-        <li>Whatsapp</li>
-        <li>Instagram</li>
-      </ul>
+    <div class="mt-20">
+        <p class="text-xl font-semibold text-gray-700">Quebre o silêncio</p>
+        <p class="text-4xl font-bold text-pink-600 mt-2">Denuncie</p>
     </div>
 
-    <div class="bg-white p-6 rounded-lg shadow-md w-64 text-center hover:shadow-xl transition">
-      <h2 class="font-semibold text-sm mb-2">Delegacia 03</h2>
-      <h3 class="text-xl font-bold mb-4">Cidade / Estado</h3>
-      <ul class="text-left list-disc list-inside space-y-1">
-        <li>Telefone</li>
-        <li>Email</li>
-        <li>Whatsapp</li>
-        <li>Instagram</li>
-      </ul>
-    </div>
-  </main>
+</main>
 
- 
-  <footer class="text-center py-10">
-    <p class="text-lg font-bold">Quebre o silêncio</p>
-    <p class="text-gray-600">Denuncie</p>
-  </footer>
-
-  <!-- p/ destacar o card -->
-  <script>
-    const cards = document.querySelectorAll('main > div');
-    cards.forEach(card => {
-      card.addEventListener('click', () => {
-        cards.forEach(c => c.classList.remove('bg-gray-800', 'text-white'));
-        card.classList.add('bg-gray-800', 'text-white');
-      });
-    });
-  </script>
+<script src="scriptsDelegacia.js"></script>
 
 </body>
 </html>
