@@ -103,3 +103,160 @@ GET	/api/posts/{id}	Retorna um post específico.	Pública
 POST	/api/posts	Cria um novo post (requer campos title, content).	Requer Token
 PUT/PATCH	/api/posts/{id}	Atualiza um post existente.	Requer Token
 DELETE	/api/posts/{id}	Deleta um post.	Requer Token
+
+
+
+
+A base da API é: http://127.0.0.1:8000/api
+
+1. Módulos Implementados
+
+Módulo
+
+Escopo
+
+Status
+
+Blog (Posts)
+
+CRUD completo para gerenciar posts. Leitura é pública, Escrita/Edição é protegida.
+
+✅ Completo
+
+Autenticação
+
+Registro, Login, Logout e validação via Token (Sanctum).
+
+✅ Completo
+
+Delegacias/Centros
+
+Não implementado no backend. A listagem é feita integralmente no frontend via JavaScript.
+
+⚠️ Pulo no Backend
+
+2. Autenticação e Usuários
+
+Todas as rotas de escrita (POST, PATCH, DELETE) em /api/posts exigem um token no header: Authorization: Bearer <token>.
+
+Endpoint
+
+Método
+
+Descrição
+
+Requer Token?
+
+/auth/register
+
+POST
+
+Cria uma nova conta de usuário.
+
+Não
+
+/auth/login
+
+POST
+
+Autentica e retorna o access_token.
+
+Não
+
+/auth/logout
+
+POST
+
+Invalida o token do usuário logado.
+
+Sim
+
+/user
+
+GET
+
+Retorna os dados do usuário logado (teste de token).
+
+Sim
+
+Payload de Login:
+
+{
+    "email": "email@example.com",
+    "password": "senha"
+}
+
+
+3. Rotas do Blog (Posts)
+
+As rotas de Posts retornam dados padronizados através do PostResource.
+
+3.1. Leitura (Público)
+
+Endpoint
+
+Método
+
+Descrição
+
+/posts
+
+GET
+
+Lista todos os posts do blog, ordenados pelo mais recente.
+
+/posts/{post}
+
+GET
+
+Retorna um post específico pelo ID.
+
+Exemplo de Retorno (/posts):
+
+{
+  "data": [
+    {
+      "id": 1,
+      "title": "Os Sinais de Alerta no Início de um Relacionamento",
+      "content": "...",
+      "created_at": "19/11/2025 22:00",
+      "updated_at": "19/11/2025 22:00",
+      "author": "Admin de Teste",
+      "user_id": 1
+    }
+  ]
+}
+
+
+3.2. Escrita (Protegido por Token e Policy)
+
+Endpoint
+
+Método
+
+Descrição
+
+/posts
+
+POST
+
+Cria um novo post. (Requer Autenticação).
+
+/posts/{post}
+
+PATCH
+
+Atualiza um post. (Requer Autenticação e Política: Só o autor pode editar - 403 Forbidden se não for o autor).
+
+/posts/{post}
+
+DELETE
+
+Exclui um post. (Requer Autenticação e Política: Só o autor pode excluir - 403 Forbidden se não for o autor).
+
+Payload de Criação/Atualização:
+
+{
+    "title": "Novo Título",
+    "content": "Conteúdo completo do post."
+}

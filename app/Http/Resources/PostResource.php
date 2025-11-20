@@ -8,18 +8,20 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class PostResource extends JsonResource
 {
     /**
-     * Transforma o recurso em um array para resposta JSON.
+     * Transform the resource into an array.
+     *
+     * @return array<string, mixed>
      */
     public function toArray(Request $request): array
     {
         return [
-            'id'        => $this->id,
-            'title'     => $this->title,
-            'content'   => $this->content,
-            'slug'      => $this->slug,
-            'user'      => new UserResource($this->whenLoaded('user')),
-            'created_at'=> $this->created_at,
-            'updated_at'=> $this->updated_at,
+            'id' => $this->id,
+            'title' => $this->title,
+            'content' => $this->content,
+            'created_at' => $this->created_at->format('d/m/Y H:i'),
+            'updated_at' => $this->updated_at->format('d/m/Y H:i'),
+            'author' => $this->user->name ?? 'Usuário Desconhecido',
+            'user_id' => $this->user_id,
         ];
     }
 }

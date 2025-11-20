@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('content');
             // Para URL amigável, garantindo que seja único
-            $table->string('slug')->unique(); 
+            $table->string('slug')->unique();
             // Adiciona colunas created_at e updated_at
             $table->timestamps(); 
         });
