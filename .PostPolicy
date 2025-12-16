@@ -1,0 +1,22 @@
+<?php
+
+namespace App\Policies;
+
+use App\Models\User;
+use App\Models\Post;
+
+class PostPolicy
+{
+
+    public function update(User $user, Post $post): bool
+    {
+        // O usuário só pode atualizar se o user_id do post for o mesmo que o seu id.
+        return $user->id === $post->user_id;
+    }
+
+    public function delete(User $user, Post $post): bool
+    {
+        // O usuário só pode deletar se o user_id do post for o mesmo que o seu id.
+        return $user->id === $post->user_id;
+    }
+}
