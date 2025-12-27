@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quebre o silêncio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+
+  
+    <header class="flex justify-between items-center px-6 py-4 bg-white shadow-md">
+        <nav class="flex space-x-6 text-sm">
+            <a href="#" class="hover:underline">Artigos</a>
+            <a href="#" class="hover:underline">Delegacias especializadas</a>
+            <a href="#" class="hover:underline">Contate-nos</a>
+        </nav>
+        <div class="space-x-3">
+            <button class="px-4 py-1 border border-gray-400 rounded hover:bg-gray-200">Login</button>
+            <button class="px-4 py-1 border border-red-400 text-red-500 rounded hover:bg-red-100">Register</button>
+        </div>
+    </header>
+
+  <!-- Hero -->
+<section class="text-center py-12 bg-gray-100">
+  <h1 class="text-4xl md:text-5xl font-bold">Quebre o silêncio</h1>
+  <p class="mt-4 text-gray-600">Um espaço seguro para informação, apoio e recursos</p>
+  <div class="mt-6 flex justify-center gap-4">
+    <button class="px-6 py-2 bg-white border border-gray-300 rounded shadow hover:bg-gray-100">Ajuda</button>
+    <button class="px-6 py-2 bg-red-400 text-white rounded shadow hover:bg-red-500">Reconheça os sinais</button>
+  </div>
+</section>
+
+<!-- Banner-->
+<section class="relative">
+  <img src="Assets/4d466b37-6daf-423a-b7b3-e96b767be74c.png" alt="Símbolos de igualdade" class="w-full object-cover">
+  <div class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-gray-100 to-transparent"></div>
+</section>
+
+  <div class="grid md:grid-cols-2 gap-6">
+  <div class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-gray-100 to-transparent"></div>
+
+     <!-- Card 1 -->
+       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-white rounded-lg shadow-lg">
+        <div class="flex items-center justify-center bg-gray-100 rounded-l-lg p-2">
+         <img src="/Assets/images.jpg" alt="Reconhecendo os Sinais de Violência Doméstica"
+         class="max-w-full max-h-64 object-contain rounded-lg">
+          </div>
+
+
+  <div class="flex flex-col justify-center p-4">
+    <h2 class="text-xl font-bold mb-2">Reconhecendo os Sinais de Violência Doméstica</h2>
+    <p class="text-gray-700">
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    </p>
+    <a href="#"
+       class="mt-4 inline-block bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition">
+       Saiba Mais
+    </a>
+  </div>
+</div>
+
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <img src="https://picsum.photos/id/1027/500/300" 
+                 alt="Imagem de artigo" 
+                 class="w-full h-56 object-cover rounded-t-lg">
+            <div class="p-6">
+                <span class="bg-pink-100 text-pink-600 px-2 py-1 rounded-full text-xs font-semibold">Segurança</span>
+                <span class="text-gray-500 text-sm ml-2">7 min</span>
+                <h2 class="text-xl font-bold mt-2">Como Criar um Plano de Segurança</h2>
+                <p class="text-gray-600 mt-2">
+"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."                </p>
+            </div>
+            <a href="#"class="mt-4 inline-block bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition">
+       Saiba Mais
+    </a>
+        </div>
+
+      
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <img src="https://picsum.photos/id/1005/500/300" 
+                 alt="Imagem de artigo" 
+                 class="w-full h-56 object-cover rounded-t-lg">
+            <div class="p-6">
+                <span class="bg-pink-100 text-pink-600 px-2 py-1 rounded-full text-xs font-semibold">Direitos</span>
+                <span class="text-gray-500 text-sm ml-2">6 min</span>
+                <h2 class="text-xl font-bold mt-2">Direitos da Mulher: Conhecer para Se Proteger</h2>
+                <p class="text-gray-600 mt-2">
+"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+<a href="#"
+       class="mt-4 inline-block bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition">
+       Saiba Mais
+    </a>
+            </div>
+        </div>
+
+    </div>
+
+    </section>
+
+</body>
+</html>
