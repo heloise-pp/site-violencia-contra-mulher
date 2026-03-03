@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="paginaDeLogin.js"></script>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkblue: "#0f172a",  
+                        lightblue: "#1e3a8a"  
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-black flex items-center justify-center h-screen">
+
+    <div class="bg-darkblue p-8 rounded-2xl shadow-2xl w-96">
+        
+        <h2 class="text-white text-2xl font-bold text-center mb-6">
+            Login
+        </h2>
+
+        <form id="loginForm" class="space-y-4">
+
+            <div>
+                <label class="block text-blue-400 mb-1">Usuário</label>
+                <input 
+                    type="text" 
+                    id="username"
+                    class="w-full p-3 rounded-lg bg-black text-white border border-blue-900 focus:outline-none focus:border-blue-500"
+                    placeholder="Digite seu usuário"
+                    required
+                >
+            </div>
+
+            <div>
+                <label class="block text-blue-400 mb-1">Senha</label>
+                <input 
+                    type="password" 
+                    id="password"
+                    class="w-full p-3 rounded-lg bg-black text-white border border-blue-900 focus:outline-none focus:border-blue-500"
+                    placeholder="Digite sua senha"
+                    required
+                >
+            </div>
+
+            <button 
+                type="submit"
+                class="w-full bg-lightblue hover:bg-blue-800 transition duration-300 text-white font-bold py-3 rounded-lg"
+            >
+                Entrar
+            </button>
+
+        </form>
+
+        <p id="message" class="text-center text-sm mt-4"></p>
+
+    </div>
+
+</body>
+</html>
