@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <script src="paginaDeLogin.js"></script>
+   
 
     <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -36,10 +36,10 @@
             <div>
                 <label class="block text-blue-400 mb-1">Usuário</label>
                 <input 
-                    type="text" 
-                    id="username"
+                    type="email" 
+                    id="email"
                     class="w-full p-3 rounded-lg bg-black text-white border border-blue-900 focus:outline-none focus:border-blue-500"
-                    placeholder="Digite seu usuário"
+                    placeholder="Digite seu email"
                     required
                 >
             </div>
@@ -54,19 +54,21 @@
                     required
                 >
             </div>
+<button 
+type="button"
+onclick="fazerLogin()"
+class="w-full bg-lightblue hover:bg-blue-800 transition duration-300 text-white font-bold py-3 rounded-lg">
+Entrar
+</button>
 
-            <button 
-                type="submit"
-                class="w-full bg-lightblue hover:bg-blue-800 transition duration-300 text-white font-bold py-3 rounded-lg"
-            >
-                Entrar
-            </button>
 
         </form>
 
         <p id="message" class="text-center text-sm mt-4"></p>
 
     </div>
+
+<script src="paginaDeLogin.js"></script>
 
 </body>
 </html>

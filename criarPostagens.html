@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Artigo</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+
+<div class="flex min-h-screen">
+
+    <aside class="w-64 bg-white border-r border-gray-200 p-6 fixed h-full">
+
+        <h2 class="text-xl font-semibold mb-8">
+            Quebre o silêncio
+        </h2>
+
+        <nav>
+
+            <ul class="space-y-4 text-gray-700">
+                <li>
+                    <a href="paginaAdm.html" class="hover:text-purple-600">
+                        Home
+                    </a>
+                </li>
+            </ul>
+
+            <div class="mt-10">
+
+                <h3 class="text-sm text-gray-400 uppercase mb-3">
+                    Posts
+                </h3>
+
+                <ul class="space-y-3">
+
+                    <li>
+                        <a href="gerenciarPosts.html" class="hover:text-purple-600">
+                            Posts
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="criarPostagens.html" class="text-purple-600 font-medium">
+                            Novo Post
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </nav>
+
+    </aside>
+
+
+  
+    <main class="flex-1 ml-64 p-10">
+
+        <div class="max-w-4xl">
+
+            <h1 class="text-2xl font-bold mb-6">
+                Criar artigo
+            </h1>
+
+            <input
+                id="titulo"
+                type="text"
+                placeholder="Título do artigo"
+                required
+                class="w-full border p-3 rounded mb-6"
+            />
+
+            <div 
+                id="editorjs"
+                class="border rounded p-6 min-h-[450px] bg-white">
+            </div>
+
+            <div class="flex gap-4 mt-6">
+
+                <button
+                    type="button"
+                    onclick="previewPost()"
+                    class="bg-gray-600 text-white px-6 py-3 rounded hover:bg-gray-700"
+                >
+                    Preview
+                </button>
+
+                <button
+                    type="button"
+                    onclick="criarPost()"
+                    class="bg-purple-600 text-white px-6 py-3 rounded hover:bg-purple-700"
+                >
+                    Publicar
+                </button>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<!-- EDITORJS SCRIPTS -->
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/list@latest/dist/bundle.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/quote@latest"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/checklist@latest"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/embed@latest"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/delimiter@latest"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/image@latest"></script>
+
+
+<script src="criarPostagens.js"></script>
+
+</body>
+</html>

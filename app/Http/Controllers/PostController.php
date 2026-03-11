@@ -3,81 +3,125 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use App\Http\Resources\PostResource;
-use App\Http\Requests\PostStoreRequest;
-use App\Http\Requests\PostUpdateRequest;
+use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Str;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class PostController extends Controller
 {
+    use AuthorizesRequests;
+
     /**
+     * Listar todos os posts
      * GET /api/posts
-     * Exibe a listagem de todos os posts (PÚBLICO).
      */
-    public function index(): AnonymousResourceCollection
+    public function index()
     {
-        // Pega todos os posts e os ordena pelo mais recente
         $posts = Post::latest()->get();
-        return PostResource::collection($posts);
+
+        return response()->json([
+            "data" => $posts
+        ]);
     }
 
-
-    public function store(PostStoreRequest $request): JsonResponse
+    /**
+     * Mostrar post específico
+     * GET /api/posts/{post}
+     */
+    public function show(Post $post)
     {
-        $validated = $request->validated();
+        return response()->json([
+            "data" => $post
+        ]);
+    }
+
+    /**
+     * Criar novo post
+     * POST /api/posts
+     */
+    public function store(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            "title" => "required|string|max:255",
+            "content" => "required|string"
+        ]);
 
         $post = Post::create([
-            'user_id' => $request->user()->id,
-                             'title' => $validated['title'],
-                             'content' => $validated['content'],
+            "user_id" => $request->user()->id,
+            "title" => $validated["title"],
+            "content" => $validated["content"],
+            "slug" => Str::slug($validated["title"])
         ]);
 
         return response()->json([
-            'message' => 'Post criado com sucesso!',
-            'post' => new PostResource($post)
+            "message" => "Post criado com sucesso",
+            "post" => $post
         ], 201);
     }
 
     /**
-     * GET /api/posts/{post}
-     * Exibe um post específico (PÚBLICO).
-     */
-    public function show(Post $post): PostResource
-    {
-        return new PostResource($post);
-    }
-
-    /**
+     * Atualizar post
      * PATCH /api/posts/{post}
-     * Atualiza um post específico (PROTEGIDO por Policy - só o autor).
      */
-    public function update(PostUpdateRequest $request, Post $post): JsonResponse
+    public function update(Request $request, Post $post): JsonResponse
     {
-        // Autorização: Verifica se o usuário é o autor do Post
-        // Se falhar, a Policy retorna 403 Forbidden
-        $this->authorize('update', $post);
+        $this->authorize("update", $post);
 
-        // Atualiza o Post com os dados validados
-        $post->update($request->validated());
+        $validated = $request->validate([
+            "title" => "required|string|max:255",
+            "content" => "required|string"
+        ]);
+
+        $post->update([
+            "title" => $validated["title"],
+            "content" => $validated["content"],
+            "slug" => Str::slug($validated["title"])
+        ]);
 
         return response()->json([
-            'message' => 'Post atualizado com sucesso!',
-            'post' => new PostResource($post)
+            "message" => "Post atualizado com sucesso",
+            "post" => $post
         ]);
     }
 
     /**
+     * Excluir post
      * DELETE /api/posts/{post}
-     * Remove um post específico (PROTEGIDO por Policy - só o autor).
      */
     public function destroy(Post $post): JsonResponse
     {
-        // Autorização: Verifica se o usuário é o autor do Post
-        $this->authorize('delete', $post);
+        $this->authorize("delete", $post);
 
         $post->delete();
 
-        return response()->json(['message' => 'Post excluído com sucesso!']);
+        return response()->json([
+            "message" => "Post excluído com sucesso"
+        ]);
+    }
+
+    /**
+     * Upload de imagem do EditorJS
+     * POST /api/upload-image
+     */
+    public function uploadImage(Request $request)
+    {
+        if (!$request->hasFile("image")) {
+            return response()->json([
+                "success" => 0,
+                "message" => "Nenhuma imagem enviada"
+            ]);
+        }
+
+        $file = $request->file("image");
+
+        $path = $file->store("posts", "public");
+
+        return response()->json([
+            "success" => 1,
+            "file" => [
+                "url" => asset("storage/" . $path)
+            ]
+        ]);
     }
 }

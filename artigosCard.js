@@ -1,77 +1,95 @@
 async function carregarArtigos() {
-    try {
-        const response = await fetch("http://localhost:3000/api/v1/posts");
-        const artigos = await response.json();
 
-        const container = document.getElementById("articlesContainer");
-        container.innerHTML = "";
+  try {
 
-        artigos.forEach((artigo, index) => {
+    const response = await fetch("http://localhost:8000/api/posts");
 
-            // Limitar texto (resumo)
-            const resumo = artigo.conteudo.length > 150
-                ? artigo.conteudo.substring(0, 150) + "..."
-                : artigo.conteudo;
-            const layoutClasse = index % 2 === 0
-                ? "grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-white rounded-lg shadow-lg"
-                : "bg-white rounded-lg shadow-md overflow-hidden";
-
-            const card = document.createElement("div");
-            card.className = layoutClasse;
-
-            if (index % 2 === 0) {
-                card.innerHTML = `
-                    <div class="flex items-center justify-center bg-gray-100 rounded-lg p-2">
-                        <img src="${artigo.imagem}" 
-                             alt="${artigo.titulo}"
-                             class="max-w-full max-h-64 object-contain rounded-lg">
-                    </div>
-
-                    <div class="flex flex-col justify-center p-4">
-                        <h2 class="text-xl font-bold mb-2">
-                            ${artigo.titulo}
-                        </h2>
-
-                        <p class="text-gray-700">
-                            ${resumo}
-                        </p>
-
-                        <a href="artigo.html?id=${artigo.id}"
-                           class="mt-4 inline-block bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition">
-                           Saiba Mais
-                        </a>
-                    </div>
-                `;
-            } else {
-                card.innerHTML = `
-                    <img src="${artigo.imagem}" 
-                         alt="${artigo.titulo}"
-                         class="w-full h-56 object-cover">
-
-                    <div class="p-6">
-                        <h2 class="text-xl font-bold mt-2">
-                            ${artigo.titulo}
-                        </h2>
-
-                        <p class="text-gray-600 mt-2">
-                            ${resumo}
-                        </p>
-
-                        <a href="artigo.html?id=${artigo.id}"
-                           class="mt-4 inline-block bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition">
-                           Saiba Mais
-                        </a>
-                    </div>
-                `;
-            }
-
-            container.appendChild(card);
-        });
-
-    } catch (error) {
-        console.error("Erro ao carregar artigos:", error);
+    if (!response.ok) {
+      throw new Error("Erro ao acessar API");
     }
+
+    const json = await response.json();
+    const artigos = json.data || [];
+
+    const container = document.getElementById("articlesContainer");
+
+    if (!container) {
+      console.error("Container articlesContainer não encontrado");
+      return;
+    }
+
+    container.innerHTML = "";
+
+    if (artigos.length === 0) {
+      container.innerHTML = `
+        <p class="text-gray-500 text-center col-span-2">
+          Nenhum artigo encontrado.
+        </p>
+      `;
+      return;
+    }
+
+    artigos.forEach((artigo) => {
+
+      let texto = "";
+
+      if (artigo.content) {
+
+        try {
+
+          const parsed = JSON.parse(artigo.content);
+
+          if (parsed.blocks) {
+
+            texto = parsed.blocks
+              .map(bloco => bloco.data?.text || "")
+              .join(" ");
+
+          }
+
+        } catch {
+          texto = artigo.content;
+        }
+
+      }
+
+      const resumo = texto.length > 150
+        ? texto.substring(0, 150) + "..."
+        : texto;
+
+      const card = document.createElement("div");
+
+      card.className = "bg-white rounded-lg shadow-md overflow-hidden";
+
+      card.innerHTML = `
+        <div class="p-6">
+
+          <h2 class="text-xl font-bold mt-2">
+            ${artigo.title}
+          </h2>
+
+          <p class="text-gray-600 mt-2">
+            ${resumo}
+          </p>
+
+          <a href="artigos.html?id=${artigo.id}"
+             class="mt-4 inline-block bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition">
+            Saiba Mais
+          </a>
+
+        </div>
+      `;
+
+      container.appendChild(card);
+
+    });
+
+  } catch (error) {
+
+    console.error("Erro ao carregar artigos:", error);
+
+  }
+
 }
 
-carregarArtigos();
-
+document.addEventListener("DOMContentLoaded", carregarArtigos);

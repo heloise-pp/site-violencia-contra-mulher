@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Editar Post</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+<body class="bg-gray-100">
+
+<div class="flex min-h-screen">
+
+<!-- SIDEBAR -->
+
+<aside class="w-64 bg-white border-r border-gray-200 p-6 fixed h-full">
+
+<h2 class="text-xl font-semibold mb-8">
+Quebre o silêncio
+</h2>
+
+<nav>
+
+<ul class="space-y-4 text-gray-700">
+<li>
+<a href="paginaAdm.html" class="hover:text-purple-600">Home</a>
+</li>
+</ul>
+
+<div class="mt-10">
+
+<h3 class="text-sm text-gray-400 uppercase mb-3">
+Posts
+</h3>
+
+<ul class="space-y-3">
+
+<li>
+<a href="posts.html" class="hover:text-purple-600">
+Gerenciar Posts
+</a>
+</li>
+
+<li>
+<a href="criarPostagens.html" class="hover:text-purple-600">
+Novo Post
+</a>
+</li>
+
+</ul>
+
+</div>
+
+</nav>
+
+</aside>
+
+
+<!-- CONTEÚDO -->
+
+<main class="flex-1 ml-64 p-10">
+
+<div class="max-w-4xl">
+
+<h1 class="text-2xl font-bold mb-6">
+Editar artigo
+</h1>
+
+<input
+id="titulo"
+placeholder="Título do artigo"
+class="w-full border p-3 rounded mb-6"
+/>
+
+<div
+id="editorjs"
+class="border rounded p-6 min-h-[450px] bg-white"
+></div>
+
+<button
+onclick="atualizarPost()"
+class="bg-purple-600 text-white px-6 py-3 rounded hover:bg-purple-700">
+Salvar alterações
+</button>
+
+</div>
+
+</main>
+
+</div>
+
+
+<!-- EDITORJS -->
+
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@2.28.2"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/header@2.7.0"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/list@1.8.0"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/image@2.8.1"></script>
+
+<script src="editarPost.js"></script>
+
+
+</body>
+</html>
